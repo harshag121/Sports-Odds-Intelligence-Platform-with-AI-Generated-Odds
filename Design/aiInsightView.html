@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Insights | KINETIC TERMINAL</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#573500",
+                        "outline-variant": "#40485d",
+                        "on-secondary-container": "#e1ffec",
+                        "on-error": "#490006",
+                        "inverse-surface": "#faf8ff",
+                        "on-tertiary-fixed-variant": "#563400",
+                        "error-dim": "#d7383b",
+                        "surface-bright": "#1f2b49",
+                        "on-error-container": "#ffa8a3",
+                        "surface": "#060e20",
+                        "primary-fixed-dim": "#5391ff",
+                        "surface-dim": "#060e20",
+                        "on-primary-container": "#002150",
+                        "primary": "#85adff",
+                        "secondary": "#69f6b8",
+                        "primary-dim": "#699cff",
+                        "surface-container": "#0f1930",
+                        "on-secondary-fixed": "#00452d",
+                        "on-primary": "#002c66",
+                        "tertiary-fixed-dim": "#e79400",
+                        "outline": "#6d758c",
+                        "surface-container-highest": "#192540",
+                        "background": "#060e20",
+                        "on-background": "#dee5ff",
+                        "primary-fixed": "#6e9fff",
+                        "inverse-on-surface": "#4d556b",
+                        "on-surface-variant": "#a3aac4",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-surface": "#dee5ff",
+                        "surface-variant": "#192540",
+                        "secondary-container": "#006c49",
+                        "on-tertiary-container": "#4a2c00",
+                        "inverse-primary": "#005bc4",
+                        "tertiary-dim": "#e79400",
+                        "secondary-fixed": "#69f6b8",
+                        "surface-container-high": "#141f38",
+                        "surface-container-lowest": "#000000",
+                        "surface-container-low": "#091328",
+                        "on-primary-fixed": "#000000",
+                        "on-secondary-fixed-variant": "#006544",
+                        "error": "#ff716c",
+                        "surface-tint": "#85adff",
+                        "on-secondary": "#005a3c",
+                        "tertiary-fixed": "#f8a010",
+                        "primary-container": "#6e9fff",
+                        "tertiary-container": "#f8a010",
+                        "on-primary-fixed-variant": "#002a62",
+                        "secondary-fixed-dim": "#58e7ab",
+                        "error-container": "#9f0519",
+                        "tertiary": "#ffb148",
+                        "secondary-dim": "#58e7ab"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "mono": ["JetBrains Mono"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #060e20; color: #dee5ff; font-family: 'Inter', sans-serif; }
+        .terminal-grid { background-image: radial-gradient(rgba(133, 173, 255, 0.05) 1px, transparent 1px); background-size: 24px 24px; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .glass { background: rgba(25, 37, 64, 0.6); backdrop-filter: blur(12px); }
+        .pulse-secondary { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+    </style>
+</head>
+<body class="terminal-grid">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-[#060e20] border-b border-[#85adff]/10 shadow-[0_0_20px_rgba(133,173,255,0.1)] flex justify-between items-center px-6 h-16">
+<div class="text-xl font-bold italic tracking-tighter text-[#85adff] font-['Space_Grotesk']">KINETIC TERMINAL</div>
+<nav class="hidden md:flex items-center space-x-8 font-['Space_Grotesk'] tracking-tight">
+<a class="text-[#dee5ff]/60 hover:text-[#dee5ff] transition-colors duration-200" href="#">Markets</a>
+<a class="text-[#85adff] border-b-2 border-[#85adff] pb-1" href="#">Intelligence</a>
+<a class="text-[#dee5ff]/60 hover:text-[#dee5ff] transition-colors duration-200" href="#">Live</a>
+<a class="text-[#dee5ff]/60 hover:text-[#dee5ff] transition-colors duration-200" href="#">My Bets</a>
+</nav>
+<div class="flex items-center space-x-4">
+<div class="hidden lg:flex items-center bg-surface-container px-3 py-1 rounded border border-outline-variant/20">
+<span class="material-symbols-outlined text-primary text-sm mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-xs font-mono text-on-surface-variant w-48 uppercase" placeholder="QUERY MARKET..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-[#dee5ff]/60 hover:text-[#85adff]">notifications</button>
+<button class="material-symbols-outlined text-[#dee5ff]/60 hover:text-[#85adff]">settings</button>
+<img alt="User Analytics Profile" class="w-8 h-8 rounded-full border border-primary/30" data-alt="close-up portrait of a tech professional with a clean, modern aesthetic in a dark studio setting with blue ambient light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWPfB4GzcRi6N5p8cryxcfF6Lia768EZz_H9AiiiwH6XeTXIkBeKg42PdjVeQmhCFyotodzyG0Gcs7SnsSvQD0-qpwB3lJfsTH4LwWrG52Ck5Nnj3hePINnapb8uBZDxE3TFSBt8QaKAPbQ58LwNONrg8T7wz9sKWam6k2_DN8XE1W8e4DXjlvFrR_jMgyD9Mb97i2h71gMLkLQFgOGg8yfxvyiPdQTv1U3llmxkRYoNuUtOQxeVQyoBVL65uZHJ2IA_JdDAzV4gg"/>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 bg-[#060e20] bg-slate-900/20 backdrop-blur-xl border-r border-[#85adff]/10 flex flex-col py-4 font-['Inter'] uppercase tracking-[0.05em] text-[10px]">
+<div class="px-6 mb-8">
+<div class="flex items-center space-x-2 text-[#85adff] font-black">
+<span class="w-2 h-2 rounded-full bg-secondary pulse-secondary"></span>
+<span class="text-xs">INTELLIGENCE</span>
+</div>
+<div class="text-[#dee5ff]/40 mt-1">V3.4 LIVE</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-6 py-3 text-[#dee5ff]/40 hover:bg-[#85adff]/5 hover:text-[#dee5ff] transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3 text-lg">insights</span>
+                Pulse Feed
+            </a>
+<a class="flex items-center px-6 py-3 bg-[#85adff]/10 text-[#85adff] border-r-4 border-[#69f6b8] transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3 text-lg">psychology</span>
+                AI Predictor
+            </a>
+<a class="flex items-center px-6 py-3 text-[#dee5ff]/40 hover:bg-[#85adff]/5 hover:text-[#dee5ff] transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3 text-lg">query_stats</span>
+                Volatility Hub
+            </a>
+<a class="flex items-center px-6 py-3 text-[#dee5ff]/40 hover:bg-[#85adff]/5 hover:text-[#dee5ff] transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3 text-lg">trending_up</span>
+                Line Movement
+            </a>
+<a class="flex items-center px-6 py-3 text-[#dee5ff]/40 hover:bg-[#85adff]/5 hover:text-[#dee5ff] transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3 text-lg">target</span>
+                Sharp Action
+            </a>
+<a class="flex items-center px-6 py-3 text-[#dee5ff]/40 hover:bg-[#85adff]/5 hover:text-[#dee5ff] transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3 text-lg">terminal</span>
+                Terminal Logs
+            </a>
+</nav>
+<div class="px-4 mt-auto">
+<button class="w-full py-3 bg-primary text-on-primary font-bold rounded-lg text-[11px] tracking-widest hover:brightness-110 transition-all">UPGRADE ENGINE</button>
+<div class="flex justify-around mt-6 pb-4">
+<button class="flex items-center text-[#dee5ff]/40 hover:text-[#dee5ff]"><span class="material-symbols-outlined mr-1">help_outline</span>Support</button>
+<button class="flex items-center text-[#dee5ff]/40 hover:text-[#dee5ff]"><span class="material-symbols-outlined mr-1">code</span>API</button>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 pt-16 p-6 min-h-screen">
+<!-- Hero Section -->
+<section class="mb-8">
+<div class="flex justify-between items-end mb-4">
+<div>
+<h1 class="text-4xl font-headline font-bold text-on-background tracking-tight">Predictive Engine v3.4</h1>
+<p class="text-on-surface-variant font-mono text-sm mt-1 uppercase tracking-wider flex items-center">
+<span class="w-2 h-2 rounded-full bg-secondary mr-2 pulse-secondary"></span>
+                        Neural Net Status: Optimization Phase Alpha
+                    </p>
+</div>
+<div class="text-right">
+<div class="mono text-2xl font-bold text-secondary tracking-tighter">0.024ms</div>
+<div class="text-[10px] text-outline uppercase tracking-widest">Query Latency</div>
+</div>
+</div>
+<!-- Live Ticker -->
+<div class="glass border border-outline-variant/10 rounded overflow-hidden">
+<div class="flex items-center whitespace-nowrap py-2 px-4 space-x-12 animate-marquee">
+<span class="mono text-[10px] uppercase text-primary flex items-center">
+<span class="material-symbols-outlined text-xs mr-1">bolt</span> NBA: LAKERS +2.5 (82% Confidence)
+                    </span>
+<span class="mono text-[10px] uppercase text-secondary flex items-center">
+<span class="material-symbols-outlined text-xs mr-1">trending_up</span> EPL: MAN CITY LINE DROPPING 1.42 -&gt; 1.38
+                    </span>
+<span class="mono text-[10px] uppercase text-tertiary flex items-center">
+<span class="material-symbols-outlined text-xs mr-1">warning</span> NFL: VOLATILITY SPIKE @ CHIEFS/BILLS
+                    </span>
+<span class="mono text-[10px] uppercase text-on-surface flex items-center">
+<span class="material-symbols-outlined text-xs mr-1">history</span> UCL: REAL MADRID (EV 12.4%)
+                    </span>
+<span class="mono text-[10px] uppercase text-primary flex items-center">
+<span class="material-symbols-outlined text-xs mr-1">bolt</span> NHL: RANGERS ML (71% CONF)
+                    </span>
+</div>
+</div>
+</section>
+<!-- Top Row: Picks & Volatility -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<!-- High Confidence Picks -->
+<div class="lg:col-span-2 glass border border-outline-variant/10 p-6 rounded-lg">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline text-lg font-bold flex items-center">
+<span class="material-symbols-outlined mr-2 text-primary" data-weight="fill">verified</span> High-Confidence Picks
+                    </h3>
+<span class="text-[10px] text-outline-variant font-mono uppercase">Last Update: 14:22:01</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Pick Card -->
+<div class="bg-surface-container-high p-4 rounded border-l-2 border-secondary hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-mono text-outline uppercase">NBA • Spread</span>
+<span class="mono text-secondary font-bold text-lg">88%</span>
+</div>
+<div class="font-headline font-bold mb-3 group-hover:text-primary transition-colors">Lakers +2.5</div>
+<div class="flex justify-between items-center text-[10px] font-mono">
+<span class="text-on-surface-variant">VALUE RATING:</span>
+<span class="text-secondary">★★★★★</span>
+</div>
+</div>
+<!-- Pick Card -->
+<div class="bg-surface-container-high p-4 rounded border-l-2 border-primary hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-mono text-outline uppercase">EPL • ML</span>
+<span class="mono text-primary font-bold text-lg">74%</span>
+</div>
+<div class="font-headline font-bold mb-3 group-hover:text-primary transition-colors">Liverpool FC</div>
+<div class="flex justify-between items-center text-[10px] font-mono">
+<span class="text-on-surface-variant">VALUE RATING:</span>
+<span class="text-primary">★★★★☆</span>
+</div>
+</div>
+<!-- Pick Card -->
+<div class="bg-surface-container-high p-4 rounded border-l-2 border-secondary hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-mono text-outline uppercase">NFL • O/U</span>
+<span class="mono text-secondary font-bold text-lg">81%</span>
+</div>
+<div class="font-headline font-bold mb-3 group-hover:text-primary transition-colors">KC/BUF Over 48.5</div>
+<div class="flex justify-between items-center text-[10px] font-mono">
+<span class="text-on-surface-variant">VALUE RATING:</span>
+<span class="text-secondary">★★★★☆</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Market Volatility -->
+<div class="glass border border-outline-variant/10 p-6 rounded-lg overflow-hidden relative">
+<h3 class="font-headline text-lg font-bold mb-4 flex items-center">
+<span class="material-symbols-outlined mr-2 text-tertiary">query_stats</span> Market Volatility
+                </h3>
+<div class="h-32 flex items-end space-x-1">
+<div class="bg-primary/20 hover:bg-primary transition-colors flex-1" style="height: 40%"></div>
+<div class="bg-primary/20 hover:bg-primary transition-colors flex-1" style="height: 60%"></div>
+<div class="bg-primary/20 hover:bg-primary transition-colors flex-1" style="height: 55%"></div>
+<div class="bg-primary/20 hover:bg-primary transition-colors flex-1" style="height: 80%"></div>
+<div class="bg-tertiary hover:bg-tertiary-container transition-colors flex-1" style="height: 95%"></div>
+<div class="bg-tertiary/60 hover:bg-tertiary-container transition-colors flex-1" style="height: 70%"></div>
+<div class="bg-primary/20 hover:bg-primary transition-colors flex-1" style="height: 50%"></div>
+<div class="bg-primary/20 hover:bg-primary transition-colors flex-1" style="height: 40%"></div>
+<div class="bg-secondary hover:bg-secondary-container transition-colors flex-1" style="height: 30%"></div>
+</div>
+<div class="mt-4 flex justify-between mono text-[9px] text-outline uppercase">
+<span>12:00</span>
+<span>13:00</span>
+<span class="text-tertiary">LIVE VOL SPIKE</span>
+<span>14:00</span>
+</div>
+</div>
+</div>
+<!-- Middle Row: Sharp Action & Neural Commentary -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+<!-- Sharp Action Tracker -->
+<div class="glass border border-outline-variant/10 rounded-lg flex flex-col">
+<div class="p-6 border-b border-outline-variant/10 flex justify-between items-center">
+<h3 class="font-headline text-lg font-bold flex items-center">
+<span class="material-symbols-outlined mr-2 text-secondary">target</span> Sharp Action Tracker
+                    </h3>
+<div class="bg-secondary/10 text-secondary text-[10px] px-2 py-0.5 rounded font-mono">FLOW: BULLISH</div>
+</div>
+<div class="flex-1 overflow-x-auto">
+<table class="w-full text-left font-mono text-xs">
+<thead>
+<tr class="text-outline uppercase text-[10px] border-b border-outline-variant/5">
+<th class="p-4">Market</th>
+<th class="p-4">Signal</th>
+<th class="p-4">Move</th>
+<th class="p-4 text-right">Magnitude</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="hover:bg-primary/5">
+<td class="p-4 text-on-surface">NY Knicks ML</td>
+<td class="p-4"><span class="text-secondary">PRO LIMITS</span></td>
+<td class="p-4">-110 → -125</td>
+<td class="p-4 text-right text-secondary">+12.4%</td>
+</tr>
+<tr class="hover:bg-primary/5">
+<td class="p-4 text-on-surface">Chelsea DNB</td>
+<td class="p-4"><span class="text-primary">SYNDICATE</span></td>
+<td class="p-4">2.10 → 1.95</td>
+<td class="p-4 text-right text-primary">+8.1%</td>
+</tr>
+<tr class="hover:bg-primary/5">
+<td class="p-4 text-on-surface">Bears Under 44</td>
+<td class="p-4"><span class="text-tertiary">SHARP BUY</span></td>
+<td class="p-4">-110 → -115</td>
+<td class="p-4 text-right text-tertiary">+4.2%</td>
+</tr>
+<tr class="hover:bg-primary/5">
+<td class="p-4 text-on-surface">Avs -1.5</td>
+<td class="p-4"><span class="text-secondary">PRO LIMITS</span></td>
+<td class="p-4">+140 → +120</td>
+<td class="p-4 text-right text-secondary">+15.7%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Neural Network Commentary -->
+<div class="glass border border-outline-variant/10 rounded-lg p-6">
+<div class="flex items-center space-x-2 mb-6">
+<span class="material-symbols-outlined text-primary">psychology</span>
+<h3 class="font-headline text-lg font-bold">Neural Insight Stream</h3>
+</div>
+<div class="space-y-6">
+<div class="flex space-x-4">
+<div class="w-1 bg-secondary rounded-full"></div>
+<div>
+<div class="text-[10px] mono text-outline mb-1">[14:15:22] PREDICTIVE_ENGINE_ALPHA</div>
+<p class="text-sm text-on-surface leading-relaxed">Late money favoring <span class="text-secondary font-bold">Manchester City</span> due to significant weather shift in Manchester. Predictive models adjusted probability +4.2% for Home Win.</p>
+</div>
+</div>
+<div class="flex space-x-4">
+<div class="w-1 bg-primary rounded-full"></div>
+<div>
+<div class="text-[10px] mono text-outline mb-1">[14:10:05] DATA_MINER_BETA</div>
+<p class="text-sm text-on-surface leading-relaxed">NBA Injury Report Correlator: <span class="text-primary font-bold">Lakers</span> spread showing 0.82 correlation with AD starting status. Intelligence suggests 'Limit Bet' if official at 3:00 PM.</p>
+</div>
+</div>
+<div class="flex space-x-4">
+<div class="w-1 bg-tertiary rounded-full"></div>
+<div>
+<div class="text-[10px] mono text-outline mb-1">[14:02:12] MARKET_SENTIMENT_V3</div>
+<p class="text-sm text-on-surface leading-relaxed">Volatility Alert: NFL <span class="text-tertiary font-bold">Chiefs/Bills</span> total market is heating. 78% of retail on Over, but 65% of large tickets on Under. Convergence imminent.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Row: Accuracy & Correlation Matrix -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Historical Accuracy -->
+<div class="lg:col-span-1 glass border border-outline-variant/10 p-6 rounded-lg">
+<h3 class="font-headline text-lg font-bold mb-6 flex items-center">
+<span class="material-symbols-outlined mr-2 text-primary">history_edu</span> Engine Reliability
+                </h3>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between text-[10px] mono uppercase mb-2">
+<span>NBA (ML/SPREAD)</span>
+<span class="text-secondary">74.2%</span>
+</div>
+<div class="h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 74.2%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[10px] mono uppercase mb-2">
+<span>EPL (RESULTS)</span>
+<span class="text-primary">68.8%</span>
+</div>
+<div class="h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 68.8%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[10px] mono uppercase mb-2">
+<span>NFL (O/U TOTALS)</span>
+<span class="text-secondary">71.5%</span>
+</div>
+<div class="h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 71.5%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[10px] mono uppercase mb-2">
+<span>NHL (MONEYLINE)</span>
+<span class="text-tertiary">61.2%</span>
+</div>
+<div class="h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary" style="width: 61.2%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Correlation Matrix -->
+<div class="lg:col-span-2 glass border border-outline-variant/10 p-6 rounded-lg">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline text-lg font-bold flex items-center">
+<span class="material-symbols-outlined mr-2 text-primary">grid_view</span> Correlation Heatmap
+                    </h3>
+<div class="flex space-x-4 mono text-[10px] uppercase">
+<span class="flex items-center"><span class="w-2 h-2 bg-secondary mr-1"></span> HIGH</span>
+<span class="flex items-center"><span class="w-2 h-2 bg-primary mr-1"></span> MED</span>
+<span class="flex items-center"><span class="w-2 h-2 bg-surface-container mr-1"></span> LOW</span>
+</div>
+</div>
+<div class="grid grid-cols-5 gap-2 font-mono text-[9px] uppercase">
+<!-- Header -->
+<div class="p-2 text-outline-variant"></div>
+<div class="p-2 text-center text-outline">NBA</div>
+<div class="p-2 text-center text-outline">NFL</div>
+<div class="p-2 text-center text-outline">EPL</div>
+<div class="p-2 text-center text-outline">UCL</div>
+<!-- Row 1 -->
+<div class="p-2 text-outline flex items-center">ML</div>
+<div class="p-3 bg-secondary/80 text-on-secondary flex items-center justify-center font-bold">0.82</div>
+<div class="p-3 bg-primary/40 flex items-center justify-center">0.45</div>
+<div class="p-3 bg-secondary/60 text-on-secondary flex items-center justify-center font-bold">0.68</div>
+<div class="p-3 bg-surface-container flex items-center justify-center text-on-surface-variant">0.12</div>
+<!-- Row 2 -->
+<div class="p-2 text-outline flex items-center">SPREAD</div>
+<div class="p-3 bg-secondary/90 text-on-secondary flex items-center justify-center font-bold">0.91</div>
+<div class="p-3 bg-primary/20 flex items-center justify-center">0.24</div>
+<div class="p-3 bg-primary/60 flex items-center justify-center text-on-primary">0.51</div>
+<div class="p-3 bg-surface-container flex items-center justify-center text-on-surface-variant">0.08</div>
+<!-- Row 3 -->
+<div class="p-2 text-outline flex items-center">TOTALS</div>
+<div class="p-3 bg-primary/30 flex items-center justify-center">0.31</div>
+<div class="p-3 bg-secondary/70 text-on-secondary flex items-center justify-center font-bold">0.77</div>
+<div class="p-3 bg-primary/50 flex items-center justify-center">0.49</div>
+<div class="p-3 bg-primary/70 flex items-center justify-center text-on-primary">0.62</div>
+</div>
+<p class="mt-4 text-[10px] text-outline italic">Matrix identifies optimal parlay legs based on cross-market signal convergence.</p>
+</div>
+</div>
+<footer class="mt-12 pt-8 border-t border-outline-variant/10 text-center pb-8">
+<div class="font-headline font-bold text-outline-variant text-sm tracking-[0.2em] mb-2 uppercase">Kinetic Engine System Log</div>
+<div class="mono text-[10px] text-outline-variant uppercase">© 2024 ODDS AI TERMINAL • ALL MODELS DEPLOYED • STABLE_BUILD_4.02</div>
+</footer>
+</main>
+<!-- FAB (Suppressed on Details/Analytics Pages) -->
+<!-- Suppressed per Rule: Suppress FAB on Details/Transaction screens -->
+</body></html>
