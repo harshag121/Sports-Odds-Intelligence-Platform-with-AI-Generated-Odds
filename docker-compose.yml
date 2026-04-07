@@ -1,0 +1,73 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
+    networks:
+      - frontend-network
+
+  api:
+    build:
+      context: ./backend
+    environment:
+      NODE_ENV: development
+      PORT: 4000
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/sports_odds
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: dev-access-secret
+      JWT_REFRESH_SECRET: dev-refresh-secret
+      PYTHON_SERVICE_URL: http://ai-service:8000
+      FRONTEND_URL: http://localhost:5173
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgres
+      - redis
+      - ai-service
+    networks:
+      - frontend-network
+      - backend-network
+
+  ai-service:
+    build:
+      context: ./ai-service
+    ports:
+      - "8000:8000"
+    networks:
+      - backend-network
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: sports_odds
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - backend-network
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - backend-network
+
+networks:
+  frontend-network:
+    driver: bridge
+  backend-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
