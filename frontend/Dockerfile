@@ -1,16 +1,20 @@
-FROM node:22-alpine AS builder
+FROM node:18-alpine AS builder
 
 WORKDIR /app
-
-COPY package.json package-lock.json* ./
-RUN npm install
+COPY package*.json ./
+RUN npm ci
 
 COPY . .
 RUN npm run build
 
-FROM nginx:1.27-alpine
+FROM node:18-alpine
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/dist /usr/share/nginx/html
+WORKDIR /app
+RUN npm install -g http-server
 
-EXPOSE 80
+COPY --from=builder /app/dist ./dist
+
+ENV PORT=8080
+EXPOSE 8080
+
+CMD ["http-server", "dist", "-p", "8080", "--spa"]
