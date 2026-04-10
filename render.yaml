@@ -29,7 +29,7 @@ services:
 
   - type: web
     name: sports-odds-ai
-    runtime: python-3.11
+    runtime: python
     buildCommand: pip install -r ai-service/requirements.txt
     startCommand: cd ai-service && uvicorn app.main:app --host 0.0.0.0 --port 8000
     envVars:
