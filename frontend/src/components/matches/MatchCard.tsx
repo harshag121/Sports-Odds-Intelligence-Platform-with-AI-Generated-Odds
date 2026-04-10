@@ -56,6 +56,18 @@ export function MatchCard({ match }: { match: Match }) {
         <OddsDisplay odds={match.odds.odds} />
       </div>
 
+      {match.odds.total && (
+        <div className="mt-5 rounded-2xl border border-secondary/10 bg-secondary/10 px-4 py-3">
+          <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-secondary">Total Points</div>
+          <div className="mt-2 text-sm text-on-background/75">
+            Predicted: <span className="font-semibold text-on-background">{match.odds.total.prediction}</span>
+          </div>
+          <div className="mt-2 text-xs text-on-background/60">
+            Over: {(match.odds.total.overProb * 100).toFixed(1)}% | Under: {(match.odds.total.underProb * 100).toFixed(1)}%
+          </div>
+        </div>
+      )}
+
       <div className="mt-5 flex items-center justify-between rounded-2xl border border-primary/10 bg-primary/10 px-4 py-3">
         <div>
           <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">AI confidence</div>

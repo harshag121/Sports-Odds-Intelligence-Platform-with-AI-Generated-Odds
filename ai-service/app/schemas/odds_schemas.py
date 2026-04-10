@@ -23,6 +23,14 @@ class OddsBreakdown(BaseModel):
     teamA: float
     teamB: float
     draw: float
+    over: Optional[float] = None
+    under: Optional[float] = None
+
+
+class Total(BaseModel):
+    prediction: float
+    overProb: float
+    underProb: float
 
 
 class OddsResponse(BaseModel):
@@ -32,3 +40,4 @@ class OddsResponse(BaseModel):
     odds: OddsBreakdown
     confidence_score: float
     factors: List[str]
+    total: Optional[Total] = None

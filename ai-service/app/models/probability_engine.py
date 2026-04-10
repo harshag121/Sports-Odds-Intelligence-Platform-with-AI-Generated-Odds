@@ -47,3 +47,37 @@ def derive_probabilities(payload: OddsRequest) -> tuple[float, float, float]:
 def to_decimal_odds(probability: float) -> float:
     adjusted = max(probability - settings.margin / 3, 0.02)
     return round(1 / adjusted, 2)
+
+
+def calculate_total_points(team_a_rating: float, team_b_rating: float, sport: str = "") -> tuple[float, float, float]:
+    """
+    Calculate expected total points and over/under probabilities.
+
+    Returns:
+        tuple: (total_points_prediction, over_probability, under_probability)
+    """
+    sport_lower = (sport or "").lower()
+
+    # Sport-specific average points per team
+    if "basket" in sport_lower:
+        base_points_per_team = 110  # Basketball averages ~220 total
+    elif "american" in sport_lower or "nfl" in sport_lower:
+        base_points_per_team = 22   # NFL averages ~44 total
+    elif "soccer" in sport_lower or "football" in sport_lower and "nfl" not in sport_lower:
+        base_points_per_team = 1.5  # Soccer averages ~3 total
+    else:
+        base_points_per_team = 2.5  # Generic default
+
+    # Rating-based adjustment (higher rated teams = more points)
+    avg_rating = (team_a_rating + team_b_rating) / 2
+    rating_factor = 0.8 + (avg_rating / 100) * 0.4  # range 0.8 to 1.2
+
+    total_prediction = base_points_per_team * 2 * rating_factor
+
+    # Over/Under probabilities (assume bell curve around prediction)
+    # Over probability increases with higher predicted total
+    over_prob = 0.5 + (rating_factor - 1) * 0.15
+    over_prob = min(0.75, max(0.25, over_prob))
+    under_prob = 1 - over_prob
+
+    return round(total_prediction, 1), round(over_prob, 3), round(under_prob, 3)

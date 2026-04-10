@@ -2,6 +2,14 @@ export interface OddsBreakdown {
   teamA: number;
   teamB: number;
   draw: number;
+  over?: number;
+  under?: number;
+}
+
+export interface Total {
+  prediction: number;
+  overProb: number;
+  underProb: number;
 }
 
 export interface MatchOdds {
@@ -11,6 +19,7 @@ export interface MatchOdds {
   odds: OddsBreakdown;
   confidenceScore: number;
   factors: string[];
+  total?: Total;
 }
 
 export interface AgentResponse {
