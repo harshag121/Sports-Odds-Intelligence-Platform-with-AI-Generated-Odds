@@ -1,8 +1,9 @@
 services:
-  - type: static
+  - type: web
     name: sports-odds-frontend
+    runtime: python
     buildCommand: cd frontend && npm install && npm run build
-    staticPublishPath: frontend/dist
+    startCommand: python -m http.server 8080 --directory frontend/dist
     envVars:
       - key: VITE_API_URL
         value: https://sports-odds-api.onrender.com/api
