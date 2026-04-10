@@ -1,0 +1,36 @@
+services:
+  - type: static
+    name: sports-odds-frontend
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://sports-odds-api.onrender.com/api
+
+  - type: web
+    name: sports-odds-api
+    runtime: node
+    buildCommand: cd backend && npm install && npm run build
+    startCommand: node dist/server.js
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: PYTHON_SERVICE_URL
+        value: https://sports-odds-ai.onrender.com
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        value: render-prod-secret-key-change-in-prod
+      - key: JWT_REFRESH_SECRET
+        value: render-prod-refresh-secret-key-change-in-prod
+      - key: FRONTEND_URL
+        value: https://sports-odds-frontend.onrender.com
+
+  - type: web
+    name: sports-odds-ai
+    runtime: python-3.11
+    buildCommand: pip install -r ai-service/requirements.txt
+    startCommand: cd ai-service && uvicorn app.main:app --host 0.0.0.0 --port 8000
+    envVars:
+      - key: PORT
+        value: 8000
