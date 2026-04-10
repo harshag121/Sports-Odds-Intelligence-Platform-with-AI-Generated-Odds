@@ -1,0 +1,21 @@
+# Frontend (Vite React)
+app = "sports-odds-frontend"
+primary_region = "sjc"
+
+[build]
+builder = "heroku"
+buildpacks = ["https://buildpack-registry.s3.amazonaws.com/buildpacks/heroku/nodejs.tgz"]
+
+[env]
+VITE_API_URL = "https://sports-odds-api.fly.dev/api"
+
+[deploy]
+release_command = "npm run build --prefix frontend"
+
+[[services]]
+internal_port = 8080
+protocol = "tcp"
+
+[services.concurrency]
+hard_limit = 25
+soft_limit = 20
